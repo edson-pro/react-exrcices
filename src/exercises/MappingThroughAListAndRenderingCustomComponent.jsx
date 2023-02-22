@@ -1,34 +1,35 @@
 import React from "react";
 
+const animals = [
+  {
+    name: "dog",
+    icon: "🐶",
+  },
+  {
+    name: "cat",
+    icon: "🐱",
+  },
+  {
+    name: "chicken",
+    icon: "🐔",
+  },
+  {
+    name: "cow",
+    icon: "🐮",
+  },
+  {
+    name: "sheep",
+    icon: "🛌",
+  },
+  {
+    name: "horse",
+    icon: "🏇",
+  },
+];
 export default function MappingThroughAListAndRenderingCustomComponent() {
   return (
     <div>
-      {[
-        {
-          name: "dog",
-          icon: "🐶",
-        },
-        {
-          name: "cat",
-          icon: "🐱",
-        },
-        {
-          name: "chicken",
-          icon: "🐔",
-        },
-        {
-          name: "cow",
-          icon: "🐮",
-        },
-        {
-          name: "sheep",
-          icon: "🛌",
-        },
-        {
-          name: "horse",
-          icon: "🏇",
-        },
-      ].map((e) => {
+      {animals.map((e) => {
         return <Item icon={e.icon} title={e.name} />;
       })}
     </div>
