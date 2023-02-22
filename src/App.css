@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.flip {
+  width: 100%;
+  display: flex;
+  height: 300px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.flip-content {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.4s;
+  transform-style: preserve-3d;
+}
+.flip:hover .flip-content {
+  transform: rotateY(180deg);
+  transition: transform 0.3s;
+}
+.flip-front,
+.flip-back {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  backface-visibility: hidden;
+}
+.flip-back {
+  transform: rotateY(180deg);
+}
