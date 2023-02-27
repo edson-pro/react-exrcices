@@ -28,18 +28,18 @@ const animals = [
 ];
 export default function MappingThroughAListAndRenderingCustomComponent() {
   return (
-    <div>
-      {animals.map((e) => {
-        return <Item icon={e.icon} title={e.name} />;
+    <ul>
+      {animals.map((item) => {
+        return <Item icon={item.icon} title={e.name} />;
       })}
-    </div>
+    </ul>
   );
 }
 
 function Item({ icon, title }) {
   return (
-    <div className="px-4 border border-gray-200 py-3">
+    <li className="px-4 border border-gray-200 py-3">
       {icon} {title}
-    </div>
+    </li>
   );
 }

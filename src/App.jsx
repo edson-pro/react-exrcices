@@ -93,11 +93,7 @@ const router = createBrowserRouter([
   },
 ]);
 function App() {
-  return (
-    <Fragment>
-      <RouterProvider router={router} />
-    </Fragment>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
