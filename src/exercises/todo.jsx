@@ -1,29 +1,26 @@
 import React, { useEffect, useState } from "react";
 
 export default function Todo() {
-  const [taskInput, settaskInput] = useState("");
+  const [value, setvalue] = useState("");
   const [taskList, setTaskList] = useState([]);
 
-  const getInput = (event) => {
-    settaskInput(event.target.value);
-  };
-  const deleteUser = (id) => {
+  const deleteTask = (id) => {
     setTaskList(taskList.filter((value) => value.id !== id));
   };
   const addTask = () => {
     const task = {
       id: taskList.length === 0 ? 1 : taskList[taskList.length - 1].id + 1,
-      name: taskInput,
+      name: value,
     };
     setTaskList([...taskList, task]);
-    settaskInput("");
+    setvalue("");
   };
   const editTask = (id, value) => {
     const newTast = taskList.map((task) =>
       task.id === id ? { ...task, name: value } : task
     );
     setTaskList(newTast);
-    settaskInput("");
+    setvalue("");
     settodoToEdit(null);
   };
   const [todoToEdit, settodoToEdit] = useState();
@@ -36,19 +33,28 @@ export default function Todo() {
   }, []);
 
   useEffect(() => {
-    if (taskList) {
+    if (taskList.length) {
       localStorage.setItem("todos", JSON.stringify(taskList));
     }
   }, [taskList]);
 
   useEffect(() => {
     if (todoToEdit) {
-      settaskInput(todoToEdit.name);
+      setvalue(todoToEdit.name);
     }
   }, [todoToEdit]);
 
   const handleEdit = (todo) => {
     settodoToEdit(todo);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (todoToEdit) {
+      editTask(todoToEdit.id, value);
+    } else {
+      addTask();
+    }
   };
   return (
     <section className="px-3 mt-40">
@@ -57,63 +63,51 @@ export default function Todo() {
           TODOS
         </h1>
 
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (todoToEdit) {
-              editTask(todoToEdit.id, taskInput);
-            } else {
-              addTask();
-            }
-          }}
-          className="relative"
-        >
+        <form onSubmit={handleSubmit} className="relative">
           <input
             className="w-full bg-slate-200 px-5 py-3 rounded-[4px] placeholder-gray-400"
             type="text"
-            value={taskInput}
-            onChange={getInput}
+            value={value}
+            onChange={(e) => setvalue(e.target.value)}
             placeholder="e.g. eggs"
           />
-          <button className="bg-blue-200 h-full duration-300 font-semibold hover:text-white hover:bg-[#48a8ec] px-4 py-1 rounded-r-lg absolute right-0">
+          <button className="bg-blue-400 text-white h-full capitalize duration-300 font-semibold hover:bg-gray-500 px-4 py-1 rounded-r-lg absolute right-0">
             submit
           </button>
         </form>
+
         {taskList &&
           taskList.map((value, index) => {
             return (
               <Task
-                edit={handleEdit}
+                edit={() => handleEdit(value)}
                 key={index}
-                id={value.id}
-                deleteUser={deleteUser}
-                taskInput={value.name}
-                todo={value}
+                id={index}
+                deleteUser={() => deleteTask(value.id)}
+                name={value.name}
               />
             );
           })}
 
-        {!taskList?.length && <div>No todos found</div>}
+        {!taskList?.length ? (
+          <div className="p-10 flex justify-center items-center font-medium text-gray-600">
+            {<div>No todos found</div>}
+          </div>
+        ) : null}
       </div>
     </section>
   );
 }
-function Task(props) {
+function Task({ name, edit, deleteUser }) {
   return (
-    <div className="px-5 flex justify-between">
-      <h1 className="text-gray-700 text-sm">{props.taskInput}</h1>
+    <div className="px-5 py-3 rounded-md flex border border-gray-200 pb-2 justify-between">
+      <h1 className="text-gray-700 font-medium capitalize text-sm">{name}</h1>
       <div className="flex gap-2">
+        <img onClick={edit} className="cursor-pointer" src={"/edit.svg"} />
         <img
-          onClick={() => props.edit(props.todo)}
+          onClick={deleteUser}
           className="cursor-pointer"
-          src={edit}
-          alt=""
-        />
-        <img
-          onClick={() => props.deleteUser(props.id)}
-          className="cursor-pointer"
-          src={remo}
-          alt=""
+          src={"/remove.svg"}
         />
       </div>
     </div>
