@@ -20,6 +20,8 @@ export default function Navbar() {
         },
         { title: "rendering json", path: "/rendering-json" },
         { title: "working with api", path: "/working-with-api" },
+        { title: "Todo", path: "/todo" },
+        { title: "calculator", path: "/calculator" },
       ].map((e) => {
         return <Link to={e.path}>{e.title}</Link>;
       })}

@@ -12,6 +12,8 @@ import WorkingWithAnAPI from "./exercises/WorkingWithAnAPI";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Layout from "./components/Layout";
+import Calculator from "./exercises/Calculator";
+import Todo from "./exercises/todo";
 
 const router = createBrowserRouter([
   {
@@ -86,6 +88,22 @@ const router = createBrowserRouter([
         element: (
           <div className="h-[70vh] w-[99%] flex justify-center items-center">
             <WorkingWithAnAPI />
+          </div>
+        ),
+      },
+      {
+        path: "/calculator",
+        element: (
+          <div className="h-[70vh] w-[99%] flex justify-center items-center">
+            <Calculator />
+          </div>
+        ),
+      },
+      {
+        path: "/todo",
+        element: (
+          <div className="h-[70vh] w-[99%] flex justify-center items-center">
+            <Todo />
           </div>
         ),
       },
