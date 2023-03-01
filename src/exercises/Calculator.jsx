@@ -33,6 +33,8 @@ export default function Calculator() {
     return result;
   }
 
+  const [res, setres] = useState();
+
   const [inputs, setinputs] = useState([0]);
   const handleNumber = (e) => {
     const lastInd = inputs.length - 1;
@@ -86,9 +88,12 @@ export default function Calculator() {
           const myObj = { op: op, val: val };
           const result = calculate(myObj);
 
-          setinputs([result, op]);
+          setres(result);
+          setinputs([0]);
         } else {
-          setinputs([evaluateExpression(inputs)]);
+          const res = evaluateExpression(inputs);
+          setres(res);
+          setinputs([0]);
         }
       } else if (e === ".") {
         handleNumber(".");
@@ -120,26 +125,28 @@ export default function Calculator() {
         }
       }
     } else if (typeof e === "number") {
+      setres(undefined);
       handleNumber(e);
     }
   };
-  console.log(inputs);
   return (
     <section className="px-4 w-full mt-5">
       <div className="max-w-[26rem] mx-auto bg-neutral-300">
         {/* Place holder will be here */}
+
         <div className="grid py-4 bg-gray-500">
           {inputs.join(" ")}
+
           <p className="ml-auto px-4 text-4xl text-white">
-            {
-              inputs.filter(
-                (e) => typeof e === "number" || e.split("").includes(".")
-              )[
-                inputs.filter(
+            {res
+              ? res
+              : inputs.filter(
                   (e) => typeof e === "number" || e.split("").includes(".")
-                ).length - 1
-              ]
-            }
+                )[
+                  inputs.filter(
+                    (e) => typeof e === "number" || e.split("").includes(".")
+                  ).length - 1
+                ]}
           </p>
         </div>
         {/* numbers will be here */}
