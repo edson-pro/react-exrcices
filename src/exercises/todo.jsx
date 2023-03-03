@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import Task from "../components/Task";
 
-export default function Todo() {
+const Todo = () => {
   const [value, setvalue] = useState("");
   const [taskList, setTaskList] = useState([]);
 
@@ -21,9 +22,9 @@ export default function Todo() {
     );
     setTaskList(newTast);
     setvalue("");
-    settodoToEdit(null);
+    setTodoToEdit(null);
   };
-  const [todoToEdit, settodoToEdit] = useState();
+  const [todoToEdit, setTodoToEdit] = useState();
 
   useEffect(() => {
     const todos = localStorage.getItem("todos");
@@ -45,7 +46,7 @@ export default function Todo() {
   }, [todoToEdit]);
 
   const handleEdit = (todo) => {
-    settodoToEdit(todo);
+    setTodoToEdit(todo);
   };
 
   const handleSubmit = (e) => {
@@ -97,19 +98,5 @@ export default function Todo() {
       </div>
     </section>
   );
-}
-function Task({ name, edit, deleteUser }) {
-  return (
-    <div className="px-5 py-3 rounded-md flex border border-gray-200 pb-2 justify-between">
-      <h1 className="text-gray-700 font-medium capitalize text-sm">{name}</h1>
-      <div className="flex gap-2">
-        <img onClick={edit} className="cursor-pointer" src={"/edit.svg"} />
-        <img
-          onClick={deleteUser}
-          className="cursor-pointer"
-          src={"/remove.svg"}
-        />
-      </div>
-    </div>
-  );
-}
+};
+export default Todo;
